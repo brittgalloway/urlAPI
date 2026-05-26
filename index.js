@@ -9,19 +9,19 @@
 'use strict';
 
 /* ── DOM refs ─────────────────────────────────────────────── */
-const navToggle   = document.querySelector('.nav-toggle');
-const primaryNav  = document.querySelector('#primary-nav');
-const form        = document.querySelector('.shortener__form');
-const input       = document.querySelector('#url-input');
-const errorMsg    = document.querySelector('#url-error');
-const resultsList = document.querySelector('.results-list');
+const $navToggle   = document.querySelector('.nav-toggle');
+const $primaryNav  = document.querySelector('#primary-nav');
+const $form        = document.querySelector('.shortener__form');
+const $input       = document.querySelector('#url-input');
+const $errorMsg    = document.querySelector('#url-error');
+const $resultsList = document.querySelector('.results-list');
 
 /* ── 1. MOBILE NAV TOGGLE ─────────────────────────────────── */
 
-navToggle.addEventListener('click', () => {
-  const isOpen = primaryNav.classList.toggle('is-open');
-  navToggle.setAttribute('aria-expanded', isOpen);
-  navToggle.setAttribute(
+$navToggle.addEventListener('click', () => {
+  const isOpen = $primaryNav.classList.toggle('is-open');
+  $navToggle.setAttribute('aria-expanded', isOpen);
+  $navToggle.setAttribute(
     'aria-label',
     isOpen ? 'Close navigation menu' : 'Open navigation menu'
   );
@@ -29,20 +29,20 @@ navToggle.addEventListener('click', () => {
 
 // Close nav when clicking outside
 document.addEventListener('click', (e) => {
-  if (!primaryNav.contains(e.target) && !navToggle.contains(e.target)) {
-    primaryNav.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-label', 'Open navigation menu');
+  if (!$primaryNav.contains(e.target) && !$navToggle.contains(e.target)) {
+    $primaryNav.classList.remove('is-open');
+    $navToggle.setAttribute('aria-expanded', 'false');
+    $navToggle.setAttribute('aria-label', 'Open navigation menu');
   }
 });
 
 // Close nav on Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && primaryNav.classList.contains('is-open')) {
-    primaryNav.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-label', 'Open navigation menu');
-    navToggle.focus();
+  if (e.key === 'Escape' && $primaryNav.classList.contains('is-open')) {
+    $primaryNav.classList.remove('is-open');
+    $navToggle.setAttribute('aria-expanded', 'false');
+    $navToggle.setAttribute('aria-label', 'Open navigation menu');
+    $navToggle.focus();
   }
 });
 
@@ -50,14 +50,14 @@ document.addEventListener('keydown', (e) => {
 /* ── 2. VALIDATION ────────────────────────────────────────── */
 
 function showError(message) {
-  errorMsg.textContent = message;
-  errorMsg.hidden = false;
-  input.setAttribute('aria-invalid', 'true');
+  $errorMsg.textContent = message;
+  $errorMsg.hidden = false;
+  $input.setAttribute('aria-invalid', 'true');
 }
 
 function clearError() {
-  errorMsg.hidden = true;
-  input.removeAttribute('aria-invalid');
+  $errorMsg.hidden = true;
+  $input.removeAttribute('aria-invalid');
 }
 
 function isValidUrl(value) {
@@ -118,38 +118,38 @@ function createResultItem(originalUrl, shortUrl) {
 function prependResult(originalUrl, shortUrl) {
   const item = createResultItem(originalUrl, shortUrl);
   // Newest result at the top
-  resultsList.prepend(item);
+  $resultsList.prepend(item);
 }
 
 
 /* ── 5. COPY TO CLIPBOARD ─────────────────────────────────── */
 
 // Event delegation — handles all copy buttons, including future ones
-resultsList.addEventListener('click', async (e) => {
-  const btn = e.target.closest('.results-list__copy-btn');
-  if (!btn) return;
+$resultsList.addEventListener('click', async (e) => {
+  const $btn = e.target.closest('.results-list__copy-btn');
+  if (!$btn) return;
 
-  const shortUrl = btn.dataset.link;
+  const shortUrl = $btn.dataset.link;
 
   try {
     await navigator.clipboard.writeText(shortUrl);
 
     // Visual + accessible feedback
-    btn.textContent = 'Copied!';
-    btn.classList.add('is-copied');
-    btn.setAttribute('aria-label', `Copied ${shortUrl}`);
+    $btn.textContent = 'Copied!';
+    $btn.classList.add('is-copied');
+    $btn.setAttribute('aria-label', `Copied ${shortUrl}`);
 
     // Reset after 2s
     setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.classList.remove('is-copied');
-      btn.setAttribute('aria-label', `Copy shortened link ${shortUrl}`);
+      $btn.textContent = 'Copy';
+      $btn.classList.remove('is-copied');
+      $btn.setAttribute('aria-label', `Copy shortened link ${shortUrl}`);
     }, 2000);
 
   } catch {
-    btn.textContent = 'Failed';
+    $btn.textContent = 'Failed';
     setTimeout(() => {
-      btn.textContent = 'Copy';
+      $btn.textContent = 'Copy';
     }, 2000);
   }
 });
@@ -157,28 +157,28 @@ resultsList.addEventListener('click', async (e) => {
 
 /* ── 6. FORM SUBMIT ───────────────────────────────────────── */
 
-form.addEventListener('submit', async (e) => {
+$form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const rawValue = input.value.trim();
+  const rawValue = $input.value.trim();
 
   // Client-side validation
   if (!rawValue) {
     showError('Please add a link');
-    input.focus();
+    $input.focus();
     return;
   }
 
   if (!isValidUrl(rawValue)) {
     showError('Please enter a valid URL (include https://)');
-    input.focus();
+    $input.focus();
     return;
   }
 
   clearError();
 
   // Loading state
-  const submitBtn = form.querySelector('.shortener__btn');
+  const submitBtn = $form.querySelector('.shortener__btn');
   const originalBtnText = submitBtn.textContent;
   submitBtn.textContent = 'Shortening…';
   submitBtn.disabled = true;
@@ -186,8 +186,8 @@ form.addEventListener('submit', async (e) => {
   try {
     const shortUrl = await shortenUrl(rawValue);
     prependResult(rawValue, shortUrl);
-    input.value = '';
-    input.focus();
+    $input.value = '';
+    $input.focus();
   } catch (err) {
     showError(err.message);
   } finally {
