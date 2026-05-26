@@ -1,83 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=5.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+    <title>Shortly — More than just shorter links | Brittney Galloway | Frontend Mentor</title>
+    <link rel="stylesheet" href="./stlye.css" />
+  </head>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Shortly URL shortening API Challenge</title>
+  <body>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body>
+    <!-- ===================== HEADER / NAV ===================== -->
+    <header class="site-header">
+      <div class="container site-header__inner">
 
-  Features
-  Pricing
-  Resources
+        <a href="/" class="site-header__logo" aria-label="Shortly — home">
+          Shortly
+        </a>
 
-  Login
-  Sign Up
+        <!-- Hamburger toggle (mobile only) -->
+        <button
+          class="nav-toggle"
+          aria-controls="primary-nav"
+          aria-expanded="false"
+          aria-label="Open navigation menu"
+        >
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+        </button>
 
-  More than just shorter links
+        <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+          <ul class="primary-nav__links" role="list">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#resources">Resources</a></li>
+          </ul>
 
-  Build your brand’s recognition and get detailed insights 
-  on how your links are performing.
+          <div class="primary-nav__auth">
+            <a href="/login" class="btn btn--ghost">Login</a>
+            <a href="/signup" class="btn btn--primary btn--pill">Sign Up</a>
+          </div>
+        </nav>
 
-  Get Started
+      </div>
+    </header>
 
-  Shorten It!
+    <main id="main-content">
 
-  Advanced Statistics
+      <!-- ===================== HERO ===================== -->
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="container hero__inner">
 
-  Track how your links are performing across the web with our 
-  advanced statistics dashboard.
+          <div class="hero__content">
+            <h1 id="hero-heading" class="hero__heading">
+              More than just shorter links
+            </h1>
+            <p class="hero__body">
+              Build your brand's recognition and get detailed insights
+              on how your links are performing.
+            </p>
+            <a href="#shorten" class="btn btn--primary btn--pill">Get Started</a>
+          </div>
 
-  Brand Recognition
+          <div class="hero__illustration" aria-hidden="true">
+            <img
+              src="./images/illustration-working.svg"
+              alt=""
+              width="733"
+              height="482"
+            />
+          </div>
 
-  Boost your brand recognition with each click. Generic links don’t 
-  mean a thing. Branded links help instil confidence in your content.
+        </div>
+      </section>
 
-  Detailed Records
+      <!-- ===================== URL SHORTENER ===================== -->
+      <section class="shortener-section" aria-labelledby="shorten-heading">
+        <div class="container">
 
-  Gain insights into who is clicking your links. Knowing when and where 
-  people engage with your content helps inform better decisions.
+          <!-- Visually hidden heading keeps section labelled for screen readers -->
+          <h2 id="shorten-heading" class="sr-only">Shorten a link</h2>
 
-  Fully Customizable
+          <div class="shortener">
+            <form
+              class="shortener__form"
+              action="#"
+              method="post"
+              aria-label="URL shortener"
+              novalidate
+            >
+              <div class="shortener__field-wrapper">
+                <label for="url-input" class="sr-only">Enter a link to shorten</label>
+                <input
+                  id="url-input"
+                  class="shortener__input"
+                  type="url"
+                  name="url"
+                  placeholder="Shorten a link here..."
+                  autocomplete="url"
+                  aria-describedby="url-error"
+                  aria-required="true"
+                />
+                <!-- Error message – hidden by default, shown via JS when invalid -->
+                <p id="url-error" class="shortener__error" role="alert" aria-live="polite" hidden>
+                  Please add a link
+                </p>
+              </div>
+              <button type="submit" class="btn btn--primary shortener__btn">
+                Shorten It!
+              </button>
+            </form>
+          </div>
 
-  Improve brand awareness and content discoverability through customizable 
-  links, supercharging audience engagement.
+          <!-- ── Results list – populated by JS ── -->
+          <ul class="results-list" aria-label="Shortened links" aria-live="polite" role="list">
+            <!--
+              Each result item is injected by index.js with the pattern below:
 
-  Boost your links today
+              <li class="results-list__item">
+                <span class="results-list__original">https://www.frontendmentor.io</span>
+                <div class="results-list__short-group">
+                  <a href="https://rel.ink/k4Kyk" class="results-list__short-link">
+                    https://rel.ink/k4Kyk
+                  </a>
+                  <button
+                    class="btn btn--primary results-list__copy-btn"
+                    aria-label="Copy shortened link https://rel.ink/k4Kyk"
+                    data-link="https://rel.ink/k4Kyk"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </li>
+            -->
+          </ul>
 
-  Get Started
+        </div>
+      </section>
 
-  Features
+      <!-- ===================== STATISTICS ===================== -->
+      <section class="stats-section" id="features" aria-labelledby="stats-heading">
+        <div class="container">
 
-  Link Shortening
-  Branded Links
-  Analytics
+          <div class="stats-section__intro">
+            <h2 id="stats-heading" class="stats-section__heading">Advanced Statistics</h2>
+            <p class="stats-section__body">
+              Track how your links are performing across the web with our
+              advanced statistics dashboard.
+            </p>
+          </div>
 
-  Resources
+          <!-- Feature cards -->
+          <ol class="features-list" role="list">
 
-  Blog
-  Developers
-  Support
+            <li class="feature-card">
+              <div class="feature-card__icon-wrapper" aria-hidden="true">
+                <img
+                  src="./images/icon-brand-recognition.svg"
+                  alt=""
+                  class="feature-card__icon"
+                  width="40"
+                  height="40"
+                />
+              </div>
+              <div class="feature-card__content">
+                <h3 class="feature-card__heading">Brand Recognition</h3>
+                <p class="feature-card__body">
+                  Boost your brand recognition with each click. Generic links don't
+                  mean a thing. Branded links help instil confidence in your content.
+                </p>
+              </div>
+            </li>
 
-  Company
+            <li class="feature-card">
+              <div class="feature-card__icon-wrapper" aria-hidden="true">
+                <img
+                  src="./images/icon-detailed-records.svg"
+                  alt=""
+                  class="feature-card__icon"
+                  width="40"
+                  height="40"
+                />
+              </div>
+              <div class="feature-card__content">
+                <h3 class="feature-card__heading">Detailed Records</h3>
+                <p class="feature-card__body">
+                  Gain insights into who is clicking your links. Knowing when and where
+                  people engage with your content helps inform better decisions.
+                </p>
+              </div>
+            </li>
 
-  About
-  Our Team
-  Careers
-  Contact
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
-</body>
+            <li class="feature-card">
+              <div class="feature-card__icon-wrapper" aria-hidden="true">
+                <img
+                  src="./images/icon-fully-customizable.svg"
+                  alt=""
+                  class="feature-card__icon"
+                  width="40"
+                  height="40"
+                />
+              </div>
+              <div class="feature-card__content">
+                <h3 class="feature-card__heading">Fully Customizable</h3>
+                <p class="feature-card__body">
+                  Improve brand awareness and content discoverability through customizable
+                  links, supercharging audience engagement.
+                </p>
+              </div>
+            </li>
+
+          </ol>
+        </div>
+      </section>
+
+      <!-- ===================== CTA BAND ===================== -->
+      <section class="cta-band" aria-labelledby="cta-heading">
+        <div class="container cta-band__inner">
+          <h2 id="cta-heading" class="cta-band__heading">Boost your links today</h2>
+          <a href="/signup" class="btn btn--primary btn--pill">Get Started</a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="container site-footer__inner">
+
+        <a href="/" class="site-footer__logo" aria-label="Shortly — home">
+          Shortly
+        </a>
+
+        <nav class="footer-nav" aria-label="Footer">
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Features</h3>
+            <ul role="list">
+              <li><a href="#link-shortening">Link Shortening</a></li>
+              <li><a href="#branded-links">Branded Links</a></li>
+              <li><a href="#analytics">Analytics</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Resources</h3>
+            <ul role="list">
+              <li><a href="#blog">Blog</a></li>
+              <li><a href="#developers">Developers</a></li>
+              <li><a href="#support">Support</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Company</h3>
+            <ul role="list">
+              <li><a href="#about">About</a></li>
+              <li><a href="#our-team">Our Team</a></li>
+              <li><a href="#careers">Careers</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <ul class="social-links" role="list" aria-label="Social media links">
+          <li>
+            <a href="https://facebook.com" class="social-links__link" aria-label="Shortly on Facebook" rel="noopener noreferrer" target="_blank">
+              <img src="./images/icon-facebook.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com" class="social-links__link" aria-label="Shortly on Twitter" rel="noopener noreferrer" target="_blank">
+              <img src="./images/icon-twitter.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </a>
+          </li>
+          <li>
+            <a href="https://pinterest.com" class="social-links__link" aria-label="Shortly on Pinterest" rel="noopener noreferrer" target="_blank">
+              <img src="./images/icon-pinterest.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </a>
+          </li>
+          <li>
+            <a href="https://instagram.com" class="social-links__link" aria-label="Shortly on Instagram" rel="noopener noreferrer" target="_blank">
+              <img src="./images/icon-instagram.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </a>
+          </li>
+        </ul>
+
+      </div>
+      <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+        Coded by <a href="https://github.com/brittgalloway">Brittney Galloway</a>.
+      </div>
+    </footer>
+
+    <script src="index.js"></script>
+  </body>
 </html>
