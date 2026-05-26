@@ -44,7 +44,7 @@
   /* Radii */
   --radius-sm:  0.25rem;
   --radius-md:  0.5rem;
-  --radius-pill: 100vmax;
+  --radius-pill: 2rem;
 
   /* Transitions */
   --transition: 200ms ease;
@@ -127,30 +127,25 @@ a {
   transition: background-color var(--transition), color var(--transition), opacity var(--transition);
   text-align: center;
   white-space: nowrap;
+  background-color: var(--color-cyan);
+  color: var(--color-white);
 
-  &--primary {
-    background-color: var(--color-cyan);
-    color: var(--color-white);
+  &:hover,
+  &:focus-visible {
+    background-color: var(--color-cyan-light);
+  }  
+}
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-gray-violet);
 
-    &:hover,
-    &:focus-visible {
-      background-color: var(--color-cyan-light);
-    }
+  &:hover,
+  &:focus-visible {
+    color: var(--color-very-dark-blue);
   }
-
-  &--ghost {
-    background-color: transparent;
-    color: var(--color-gray-violet);
-
-    &:hover,
-    &:focus-visible {
-      color: var(--color-very-dark-blue);
-    }
-  }
-
-  &--pill {
-    border-radius: var(--radius-pill);
-  }
+}
+.btn--pill {
+  border-radius: var(--radius-pill);
 }
 
 /* Shared focus style */
@@ -456,15 +451,16 @@ a {
   }
 }
 
-/* Feature cards — stacked on mobile with connector line */
+/* Feature cards — grid layout, mobile: 1 col / 3 rows */
 .features-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: var(--space-lg);
   position: relative;
+  justify-items:  center;
 
-  /* Vertical connector line between cards */
+  /* Mobile: vertical cyan line centered horizontally */
   &::before {
     content: '';
     position: absolute;
@@ -475,6 +471,11 @@ a {
     transform: translateX(-50%);
     z-index: 0;
   }
+
+  /* Card alignment — start / center / end creates the stagger */
+  & .feature-card:nth-child(1) { align-self: start; }
+  & .feature-card:nth-child(2) { align-self: center; }
+  & .feature-card:nth-child(3) { align-self: end; }
 }
 
 .feature-card {
@@ -486,7 +487,6 @@ a {
   max-width: 22rem;
   width: 100%;
   text-align: center;
-  margin-block: var(--space-md);
 
   & .feature-card__icon-wrapper {
     display: grid;
@@ -507,6 +507,7 @@ a {
     margin-block-end: var(--space-sm);
   }
 }
+
 
 
 /* ── 9. CTA BAND ────────────────────────────────────────────── */
@@ -629,7 +630,7 @@ a {
 
 @media (width >= 768px) {
 
-  /* Header */
+  /* ── Header ── */
   .nav-toggle {
     display: none;
   }
@@ -641,16 +642,17 @@ a {
     position: static;
     background-color: transparent;
     padding: 0;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     text-align: left;
 
     & .primary-nav__links {
       flex-direction: row;
-      gap: var(--space-md);
+      gap: var(--space-sm);
       padding-block-end: 0;
       border-bottom: none;
 
       & a {
+        font-size: 0.9rem;
         color: var(--color-gray-violet);
 
         &:hover,
@@ -662,30 +664,37 @@ a {
 
     & .primary-nav__auth {
       flex-direction: row;
+      align-items: center;
       margin-inline-start: auto;
+      gap: var(--space-sm);
 
       & .btn--ghost {
+        font-size: 0.9rem;
         color: var(--color-gray-violet);
+        padding-inline: var(--space-sm);
       }
 
       & .btn--primary {
         width: auto;
+        font-size: 0.9rem;
+        padding: 0.6em 1.5em;
       }
     }
   }
 
-  /* Hero */
+  /* ── Hero ── */
   .hero {
     text-align: left;
 
     & .hero__inner {
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
+      gap: var(--space-xl);
+      padding-block: var(--space-2xl);
     }
 
     & .hero__content {
-      max-width: 40%;
+      flex: 0 0 45%;
     }
 
     & .hero__body {
@@ -693,85 +702,100 @@ a {
     }
 
     & .hero__illustration {
-      margin-inline-end: calc(var(--container-padding) * -3);
+      /* Bleed illustration to the right edge of the viewport */
       flex: 1;
+      margin-inline-end: calc(
+        (100vw - var(--container-max)) / 2 * -1 - var(--container-padding)
+      );
     }
   }
 
-  /* Shortener */
+  /* ── Shortener ── */
   .shortener {
     background-image: url('./images/bg-shorten-desktop.svg');
+    background-size: cover;
     padding: var(--space-lg) var(--space-xl);
 
     & .shortener__form {
       flex-direction: row;
       align-items: flex-start;
+      gap: var(--space-md);
     }
 
     & .shortener__field-wrapper {
       flex: 1;
     }
 
+    & .shortener__input {
+      padding: 0.85em 1.25em;
+    }
+
     & .shortener__btn {
       width: auto;
       border-radius: var(--radius-md);
       flex-shrink: 0;
+      align-self: center;
     }
   }
 
-  /* Results */
+  /* ── Results ──
+     Desktop: one row per result
+  ── */
   .results-list {
     & .results-list__item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto;
       align-items: center;
-      gap: var(--space-md);
+      padding-inline: var(--space-md);
     }
 
     & .results-list__original {
-      flex: 1;
       border-bottom: none;
+      padding-block: var(--space-sm);
+      padding-inline: 0;
     }
 
     & .results-list__short-group {
       flex-direction: row;
       align-items: center;
-      border-top: none;
-      padding: var(--space-sm);
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
     }
 
     & .results-list__copy-btn {
       width: auto;
+      min-width: 6rem;
     }
   }
 
-  /* Stats — 3-column layout with horizontal connector */
-  .features-list {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    gap: var(--space-lg);
+  /* ── Stats — 3-column grid, staggered, horizontal connector ── */
+  .stats-section {
+    text-align: center;
+  }
 
+  .features-list {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    /* ~130% taller than a single card: card ~18rem + padding, so ~25rem */
+    min-height: 25rem;
+
+    /* Desktop: horizontal cyan line centered vertically */
     &::before {
-      inset-block: 35%;
+      inset-block-start: 50%;
+      inset-block-end: auto;
       inset-inline: 0;
+      inset-inline-start: 0;
       width: 100%;
       height: 8px;
-      transform: none;
+      transform: translateY(-50%);
     }
   }
 
   .feature-card {
+    max-width: none;
     text-align: left;
-    margin-block: 0;
 
-    /* Offset each card to create a staggered vertical rhythm */
-    &:nth-child(2) {
-      margin-block-start: var(--space-xl);
-    }
-
-    &:nth-child(3) {
-      margin-block-start: calc(var(--space-xl) * 2);
-    }
+    /* align-self inherited from mobile: start / center / end — no changes needed */
 
     & .feature-card__icon-wrapper {
       margin-inline: 0;
@@ -779,18 +803,18 @@ a {
     }
   }
 
-  /* CTA band */
   .cta-band {
     background-image: url('./images/bg-boost-desktop.svg');
+    background-size: cover;
 
-    & .cta-band__inner {
-      flex-direction: row;
-      justify-content: space-between;
-      text-align: left;
+    & .cta-band__heading {
+      max-width: 20ch;
     }
   }
 
-  /* Footer */
+  /* ── Footer ──
+     Logo | nav groups (centered) | social icons — one row, top-aligned
+  ── */
   .site-footer {
     text-align: left;
 
@@ -798,15 +822,19 @@ a {
       flex-direction: row;
       align-items: flex-start;
       justify-content: space-between;
+      gap: var(--space-xl);
     }
   }
 
   .footer-nav {
     flex-direction: row;
     gap: var(--space-2xl);
+    flex: 1;
+    justify-content: center;
   }
 
   .social-links {
     align-self: flex-start;
+    gap: var(--space-sm);
   }
 }
