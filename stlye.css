@@ -196,12 +196,31 @@ a {
     background-color: var(--color-gray-violet);
     border-radius: var(--radius-pill);
     transition: transform var(--transition), opacity var(--transition);
+    transform-origin: center;
+  }
+}
+
+/* X state — driven by aria-expanded, no extra JS class needed */
+.nav-toggle[aria-expanded="true"] {
+  & .nav-toggle__bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  & .nav-toggle__bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  & .nav-toggle__bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 }
 
 /* ── Primary nav — mobile (hidden by default) ── */
 .primary-nav {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
   position: absolute;
   top: calc(100% + var(--space-xs));
   left: var(--container-padding);
@@ -211,11 +230,16 @@ a {
   padding: var(--space-lg);
   text-align: center;
   z-index: 99;
+  /* Fade — hidden by default, visible when open */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition), visibility var(--transition);
 
   &.is-open {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   & .primary-nav__links {
@@ -459,7 +483,7 @@ a {
   grid-template-rows: auto;
   gap: var(--space-lg);
   position: relative;
-  justify-items:  center;
+  justify-items: center;
 
   /* Mobile: vertical cyan line centered horizontally */
   &::before {
@@ -486,7 +510,7 @@ a {
   width: 100%;
   text-align: center;
   z-index: 1;
-  
+
   & .feature-card__icon-wrapper {
     display: grid;
     place-items: center;
@@ -500,6 +524,7 @@ a {
     border-radius: var(--radius-circle);
     z-index: 2;
   }
+
   & .feature-card__content {
     grid-row: 2/5;
     grid-column: 1/2;
@@ -507,13 +532,13 @@ a {
     background-color: var(--color-white);
     border-radius: var(--radius-md);
   }
+
   & .feature-card__heading {
     font-size: 1.25rem;
     color: var(--color-very-dark-blue);
     margin-block: var(--space-lg) var(--space-sm);
   }
 }
-
 
 
 /* ── 9. CTA BAND ────────────────────────────────────────────── */
@@ -782,7 +807,6 @@ a {
   .features-list {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    /* ~150% taller than a single card: card ~18rem + padding, so ~28rem */
     min-height: 28rem;
 
     /* Desktop: horizontal cyan line centered vertically */
@@ -790,7 +814,6 @@ a {
       inset-block-start: 50%;
       inset-block-end: auto;
       inset-inline: 0;
-      inset-inline-start: 0;
       width: 100%;
       height: 8px;
       transform: translateY(-50%);
