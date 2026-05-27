@@ -293,6 +293,7 @@ a {
     flex-direction: column-reverse;
     gap: var(--space-lg);
     padding-block: var(--space-xl);
+    margin-bottom: calc(var(--space-xl) * 2 + var(--space-sm));
   }
 
   & .hero__illustration {
@@ -300,9 +301,7 @@ a {
     margin-inline-end: calc(var(--container-padding) * -1);
 
     & img {
-      width: 100%;
-      max-width: 36rem;
-      margin-inline: auto;
+      max-width: none;
     }
   }
 
@@ -327,12 +326,6 @@ a {
 .shortener-section {
   background-color: var(--color-bg);
   padding-block-end: var(--space-xl);
-
-  /* Pull the shortener card up over the hero */
-  & .container {
-    transform: translateY(-50%);
-    margin-block-end: calc(var(--space-xl) * -1 + var(--space-sm));
-  }
 }
 
 .shortener {
@@ -342,7 +335,7 @@ a {
   background-position: top right;
   border-radius: var(--radius-md);
   padding: var(--space-md);
-
+  transform: translateY(-50%);
   & .shortener__form {
     display: flex;
     flex-direction: column;
@@ -404,7 +397,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  margin-block-start: var(--space-sm);
+  margin-block-start: calc(var(--space-xl) * -1);
 
   & .results-list__item {
     background-color: var(--color-white);
@@ -495,6 +488,7 @@ a {
     background-color: var(--color-cyan);
     transform: translateX(-50%);
     z-index: 0;
+    top: 4rem;
   }
 
   /* Card alignment — start / center / end creates the stagger */
@@ -725,7 +719,7 @@ a {
     }
 
     & .hero__content {
-      flex: 0 0 45%;
+      flex: 0 0 55%;
     }
 
     & .hero__body {
@@ -733,11 +727,13 @@ a {
     }
 
     & .hero__illustration {
-      /* Bleed illustration to the right edge of the viewport */
-      flex: 1;
-      margin-inline-end: calc(
-        (100vw - var(--container-max)) / 2 * -1 - var(--container-padding)
-      );
+      /* Bleed illustration past the right edge of the viewport */
+      flex: 0 0 45%;
+      transform: translateX(8%);
+      overflow: visible;
+      & img {
+        max-width: none;
+      }
     }
   }
 
