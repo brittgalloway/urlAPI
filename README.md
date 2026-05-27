@@ -2,7 +2,7 @@
 
 A [Frontend Mentor](https://www.frontendmentor.io/challenges/url-shortening-api-landing-page-2ce3ob-G) challenge, built as a practice project to sharpen frontend fundamentals — semantic HTML, modern CSS, and vanilla JS.
 
-> 🚧 **Live demo coming soon**
+> **[Live demo](https://brittgalloway.github.io/urlAPI/)**
 
 ---
 
